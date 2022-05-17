@@ -491,7 +491,7 @@ ALTER TABLE ONLY public.star
 -- 
 -- Use the CodeAlly environment provided by freecodecamp
 -- connect to psql:
--- psql --usenname=freecodecamp --dbname=postgres
+-- psql --username=freecodecamp --dbname=postgres
 --
 
 -- 
