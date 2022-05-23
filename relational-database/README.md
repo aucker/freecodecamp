@@ -3,7 +3,7 @@ I'm now learning PostgreSQL. There are some of my solutions.
 
 Through this project, I'm now **familiar with** `PostgreSQL`, `shell script`, and `git`.
 
-* remove the first commit[refernce](https://stackoverflow.com/questions/10911317/how-to-remove-the-first-commit-in-git)
+* remove the first commit [refernce](https://stackoverflow.com/questions/10911317/how-to-remove-the-first-commit-in-git)
 ```shell
 git update-ref -d HEAD
 ```
