@@ -7,13 +7,22 @@ EXIT() {
 
 # delete a row with atomic_number = 1000
 EXIST=$($PSQL "SELECT atomic_number FROM elements WHERE atomic_number=1000")
-echo "$EXIST"
-EXIST_NOW=$(echo "$EXIST" | xargs)
+# echo $EXIST
+EXIST_NOW=$(echo $EXIST | xargs)
 if [[ "$EXIST_NOW" == 1000 ]]
 then 
-  echo "$($PSQL "DELETE FROM elements WHERE atomic_number=1000;DELETE FROM properties WHERE atomic_number=1000")"
+  echo $($PSQL "DELETE FROM properties WHERE atomic_number=1000;DELETE FROM elements WHERE atomic_number=1000")
   # echo $($PSQL "")
 fi
+
+# delete column type from properties
+# EXIST_TYPE=$($PSQL "SELECT type FROM properties")
+# if [[ ! -z $EXIST_TYPE ]]
+# then 
+#   echo $($PSQL "ALTER TABLE properties DROP COLUMN type")
+# else 
+#   echo 
+# fi
 
 if [[ $1 ]]
 then 
@@ -37,33 +46,35 @@ then
       ELE_MASS=$($PSQL "SELECT atomic_mass FROM properties WHERE atomic_number=$ATOMIC_NUMBER")
       ELE_MELT=$($PSQL "SELECT melting_point_celsius FROM properties WHERE atomic_number=$ATOMIC_NUMBER")
       ELE_BOIL=$($PSQL "SELECT boiling_point_celsius FROM properties WHERE atomic_number=$ATOMIC_NUMBER")
+    
+      # GET_ELEMENT_ID
+      echo The element with atomic number $ATOMIC_NUMBER is $ELE_NAME \($SYMBOL\). It\'s a $ELE_TYPE, with a mass of $ELE_MASS amu. $ELE_NAME has a melting point of $ELE_MELT celsius and a boiling point of $ELE_BOIL celsius.
     fi
     
-    # GET_ELEMENT_ID
-    echo The element with atomic number $ATOMIC_NUMBER is $ELE_NAME\($SYMBOL\). It\'s a $ELE_TYPE, with a mass of $ELE_MASS amu. $ELE_NAME has a melting point of $ELE_MELT celsius and a boiling point of $ELE_BOIL celsius.
   elif [[ "$1" =~ ^[A-Z][a-z]?$ ]]
   then 
     # GET_ELEMENT_SYMBOL
     # SYMBOL=$1
     # echo 111$SYMBOL
     ATOMIC_SYMBOL=$($PSQL "SELECT symbol FROM elements WHERE symbol = '$1'")
-    echo 111$ATOMIC_SYMBOL
+    # echo 111$ATOMIC_SYMBOL
     if [[ -z $ATOMIC_SYMBOL ]]
     then 
       EXIT
     else
       ATOMIC_NUMBER=$($PSQL "SELECT atomic_number FROM elements WHERE symbol='$1'")
-      echo $ATOMIC_NUMBER2
+      # echo $ATOMIC_NUMBER2
       ELE_NAME=$($PSQL "SELECT name FROM elements WHERE symbol='$1'")
-      echo $ELE_NAME   
+      # echo $ELE_NAME   
       TYPE_ID=$($PSQL "SELECT type_id FROM properties WHERE atomic_number=$ATOMIC_NUMBER")
       # TYPE=$($PSQL "SELECT type FROM types INNER JOIN properties WHERE atomic_number=$ATOMIC_NUMBER")
       ELE_TYPE=$($PSQL "SELECT type FROM types WHERE type_id=$TYPE_ID")
       ELE_MASS=$($PSQL "SELECT atomic_mass FROM properties WHERE atomic_number=$ATOMIC_NUMBER")
       ELE_MELT=$($PSQL "SELECT melting_point_celsius FROM properties WHERE atomic_number=$ATOMIC_NUMBER")
       ELE_BOIL=$($PSQL "SELECT boiling_point_celsius FROM properties WHERE atomic_number=$ATOMIC_NUMBER")
+      echo The element with atomic number $ATOMIC_NUMBER is $ELE_NAME \($1\). It\'s a $ELE_TYPE, with a mass of $ELE_MASS amu. $ELE_NAME has a melting point of $ELE_MELT celsius and a boiling point of $ELE_BOIL celsius.
+   
     fi
-    echo The element with atomic number $ATOMIC_NUMBER is $ELE_NAME\($1\). It\'s a $ELE_TYPE, with a mass of $ELE_MASS amu. $ELE_NAME has a melting point of $ELE_MELT celsius and a boiling point of $ELE_BOIL celsius.
   elif [[ "$1" =~ ^[A-Z][a-z][a-z]+$ ]]
   then 
     # GET_ELEMENT_NAME
@@ -85,8 +96,8 @@ then
       ELE_MASS=$($PSQL "SELECT atomic_mass FROM properties WHERE atomic_number=$ATOMIC_NUMBER")
       ELE_MELT=$($PSQL "SELECT melting_point_celsius FROM properties WHERE atomic_number=$ATOMIC_NUMBER")
       ELE_BOIL=$($PSQL "SELECT boiling_point_celsius FROM properties WHERE atomic_number=$ATOMIC_NUMBER")
+      echo The element with atomic number $ATOMIC_NUMBER is $NAME \($SYMBOL\). It\'s a $ELE_TYPE, with a mass of $ELE_MASS amu. $NAME has a melting point of $ELE_MELT celsius and a boiling point of $ELE_BOIL celsius.
     fi
-    echo The element with atomic number $ATOMIC_NUMBER is $NAME\($SYMBOL\). It\'s a $ELE_TYPE, with a mass of $ELE_MASS amu. $ELE_NAME has a melting point of $ELE_MELT celsius and a boiling point of $ELE_BOIL celsius.
   else
     EXIT
   fi
@@ -116,4 +127,3 @@ fi
 # GET_ELEMENT_NAME() {
 
 # }
-
