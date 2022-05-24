@@ -1,17 +1,16 @@
 #!/bin/bash
 PSQL="psql --username=freecodecamp --dbname=number_guess -t --no-align -c"
 
-echo -e "\n~~~~~ Number Guessing Game ~~~~~\n"
+# echo -e "\n~~~~~ Number Guessing Game ~~~~~\n"
 # NUMBER=$(shuf -i 1-1000 -n 1)
 NUMBER=$(( $RANDOM % 1000 + 1 ))
 # this number should be comment 
 # echo $NUMBER
 echo -e "Enter your username:"
 # read -r username
-read -r USERNAME
+read USERNAME
 # echo $USERNAME
-if [[ ! -z $USERNAME ]]
-then 
+
   # this is a valid username, do something 
   # first check the existence in the database
   CHECK_RESULT=$($PSQL "SELECT user_name FROM users WHERE user_name='$USERNAME'")
@@ -30,7 +29,7 @@ then
     SCORE=$($PSQL "SELECT score FROM users WHERE user_name='$USERNAME'")
     echo -e "\nWelcome back, $USERNAME! You have played $GUESS_TIME games, and your best game took $SCORE guesses."
   fi
-fi
+
 echo -e "\nGuess the secret number between 1 and 1000:"
 read GUESS
 NUMBER_GUESS=0
@@ -70,6 +69,7 @@ if [[ -z $CHECK_RESULT ]]
 then
   # this user is new come, just insert
   INSERT_RESULT=$($PSQL "INSERT INTO users(user_name, guess_time, score) VALUES('$USERNAME', 1, $NUMBER_GUESS)")
+  echo "$INSERT_RESULT"
 else 
   # this user has played before, update the info
   GUESS_TIME=$((GUESS_TIME+1))
