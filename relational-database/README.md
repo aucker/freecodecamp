@@ -1,5 +1,5 @@
 ## Relational Database:rocket:
-I'm now learning PostgreSQL. There are some of my solutions.
+I'm now learning PostgreSQL. There are some of my solutions. And I got a [certificate](https://www.freecodecamp.org/certification/aucker/relational-database-v8).
 
 Through this project, I'm now **familiar with** `PostgreSQL`, `shell script`, and `git`.
 
