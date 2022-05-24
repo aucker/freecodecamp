@@ -78,6 +78,6 @@ else
     # update this user's score
     SCORE=$NUMBER_GUESS
   fi
-  UPDATE_RESULT=$($PSQL "UPDATE users SET guess_time=$GUESS_TIME, score=$SCORE WHERE user_name='$USERNAME'")
+#   UPDATE_RESULT=$($PSQL "UPDATE users SET guess_time=$GUESS_TIME, score=$SCORE WHERE user_name='$USERNAME'")
 
 fi
