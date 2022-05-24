@@ -1,11 +1,15 @@
 #!/bin/bash
 PSQL="psql --username=freecodecamp --dbname=number_guess -t --no-align -c"
 
-NUMBER=$(shuf -i 1-1000 -n 1)
+echo -e "\n~~~~~ Number Guessing Game ~~~~~\n"
+# NUMBER=$(shuf -i 1-1000 -n 1)
+NUMBER=$(( $RANDOM % 1000 + 1 ))
 # this number should be comment 
-echo $NUMBER
+# echo $NUMBER
 echo -e "Enter you username:"
-read USERNAME
+# read -r username
+read -r USERNAME
+# echo $USERNAME
 if [[ ! -z $USERNAME ]]
 then 
   # this is a valid username, do something 
@@ -31,30 +35,36 @@ echo -e "\nGuess the secret number between 1 and 1000:"
 read GUESS
 NUMBER_GUESS=0
 CHECK_INT() {
-  while [[ ! "$GUESS" =~ ^[0-9]+$ ]] 
-  # this is not integer, need to guess again
-  do
+  # while [[ ! "$GUESS" =~ ^[0-9]+$ ]] 
+  # # this is not integer, need to guess again
+  # do
+  #   echo -e "\nThat is not an integer, guess again:"
+  #   read GUESS
+  # done
+  if [[ ! "$GUESS" =~ ^[0-9]+$ ]]
+  then 
     echo -e "\nThat is not an integer, guess again:"
     read GUESS
-  done
-}
 
+  fi
+}
+CHECK_INT
 while [ "$GUESS" -ne "$NUMBER" ]
 do 
   if [ "$GUESS" -gt "$NUMBER" ]
   then 
     echo -e "\nIt's higher than that, guess again:"
     read GUESS
-    NUMBER_GUESS=$NUMBER_GUESS+1
+    NUMBER_GUESS=$((NUMBER_GUESS+1))
   else [ "$GUESS" -lt "$NUMBER" ]
     echo -e "\nIt's lower than that, guess again:" 
     read GUESS
-    NUMBER_GUESS=$NUMBER_GUESS+1
+    NUMBER_GUESS=$((NUMBER_GUESS+1))
   fi
 done
-NUMBER_GUESS=$NUMBER_GUESS+1
+NUMBER_GUESS=$((NUMBER_GUESS+1))
 echo -e "\nYou guessed it in $NUMBER_GUESS tries. The secret number was $NUMBER. Nice job!"
-
+# echo $((NUMBER_GUESS))
 # after the game, insert the user_info into the database
 if [[ -z $CHECK_RESULT ]]
 then
@@ -62,7 +72,7 @@ then
   INSERT_RESULT=$($PSQL "INSERT INTO users(user_name, guess_time, score) VALUES('$USERNAME', 1, $NUMBER_GUESS)")
 else 
   # this user has played before, update the info
-  GUESS_TIME=$GUESS_TIME+1
+  GUESS_TIME=$((GUESS_TIME+1))
   if [ "$NUMBER_GUESS" -lt "$SCORE" ]
   then 
     # update this user's score
