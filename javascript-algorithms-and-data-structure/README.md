@@ -1,6 +1,6 @@
 ## JavaScript:milky_way:
 Something I learned by freeCodeCamp:baby:
-* `var`, `let` and `const`
+### `var`, `let` and `const`
 
 There are three way to declare a variable, `var`, `let`, and `const`. 
 The `var` can be altered at anytime.
@@ -12,12 +12,11 @@ const ourArray = [50, 40, 30];
 ourArray[0] = 15;
 ```
 
-* Strict Equality
+### Strict Equality
 
 Strict equality (`===`) is the counterpart to the equality operator (`==`). However, unlike the equality operator, which attempts to convert both values being compared to a common type, the strict equality operator does not perform a type conversion.
 
 If the values being compared have different types, they are considered unequal, and the strict equality operator will return false.
-
 **e.g.**
 ```javascript
 3 === 3 // true
