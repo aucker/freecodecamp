@@ -23,6 +23,7 @@ If the values being compared have different types, they are considered unequal, 
 3 === 3 // true
 3 === '3' // false
 3 == '3' //true
+3 == "3" //true
 ```
 `3 == '3'` returns true because JavaScript performs type conversion from string to number. `3 === '3'` returns false because the types are different and type conversion is not performed.
 **Note:**
@@ -30,4 +31,7 @@ In JavaScript, you can determine the type of a variable or a value with the `typ
 ```javascript
 typeof 3 //number
 typeof '3' //string
+typeof "3" // string
 ```
+
+Remember that `undefined` is a keyword, not a string.
