@@ -233,3 +233,151 @@ ourPets[0].names[1];
 ourPets[1].names[0];
 ```
 
+### **Profile Lookup**
+The function should check if `name` is an actual contact's `firstName` and the given property (`prop`) is a property of that contact.
+
+If both are true, then return the "value" of that property.
+
+If `name` does not correspond to any contacts then return the string `No such contact`.
+
+If `prop` does not correspond to any valid properties of a contact found to match `name` then return the string `No such property`.
+
+**Note how to use the `JSON` like content in js**
+```javascript
+const contacts = [
+  {
+    firstName: "Akira",
+    lastName: "Laine",
+    number: "0543236543",
+    likes: ["Pizza", "Coding", "Brownie Points"],
+  },
+  {
+    firstName: "Harry",
+    lastName: "Potter",
+    number: "0994372684",
+    likes: ["Hogwarts", "Magic", "Hagrid"],
+  },
+  {
+    firstName: "Sherlock",
+    lastName: "Holmes",
+    number: "0487345643",
+    likes: ["Intriguing Cases", "Violin"],
+  },
+  {
+    firstName: "Kristian",
+    lastName: "Vos",
+    number: "unknown",
+    likes: ["JavaScript", "Gaming", "Foxes"],
+  },
+];
+
+function lookUpProfile(name, prop) {
+  for (let i = 0; i < contacts.length; i++) {
+    if (contacts[i].firstName === name) {
+      if (prop in contacts[i]) {
+        return contacts[i][prop];
+      } else {
+        return "No such property";
+      }
+    }
+  }
+  return "No such contact";
+}
+
+lookUpProfile("Akira", "likes");
+```
+There is also another way to check if the `prop` is in the contacts:
+```javascript
+if (contacts[i].hasOwnProperty(prop))
+```
+
+### Use Multiple Conditional (Ternary) Operators
+The following function uses `if`, `else if`, and `else` statements to check multiple conditions:
+```javascript
+function findGreaterOrEqual(a, b) {
+  if (a === b) {
+    return "a and b are equal";
+  }
+  else if (a > b) {
+    return "a is greater";
+  }
+  else {
+    return "b is greater";
+  }
+}
+```
+The above functoin can be re-written using multiple conditional operators:
+```javascript
+function findGreaterOrEqual(a, b) {
+  return (a === b) ? "a and b are equal" 
+    : (a > b) ? "a is greater" 
+    : "b is greater";
+}
+```
+
+
+### Replace Loops using Recursion
+Recursion is the concept that a function can be expressed in terms of itself.
+
+Multiply the first `n` elements of an array to create the product of those elements. Using a `for` loop:
+```javascript
+function multiply(arr, n) {
+    let product = 1;
+    for (let i = 0; i < n; i++) {
+      product *= arr[i];
+    }
+    return product;
+  }
+```
+Rewrite this with `recursion`
+```javascript
+function multiply(arr, n) {
+  if (n <= 0) {
+    return 1;
+  } else {
+    return multiply(arr, n - 1) * arr[n - 1];
+  }
+}
+```
+
+
+### Use Recursion to Create a Countup
+```typescript
+function countup(n) {
+  if (n < 1) {
+    return [];
+  } else {
+    const countArray = countup(n - 1);
+    countArray.push(n);
+    return countArray;
+  }
+}
+console.log(countup(5));
+```
+
+### Use Recursion to Create a Countdown
+```typescript
+function countdown(n) {
+  if (n < 1) {
+    return [];
+  } else {
+    const countArray = countdown(n - 1);
+    countArray.unshift(n);
+    return countArray;
+  }
+}
+```
+
+### Use Recursion to Create a Range of Numbers 
+```javascript
+function rangeOfNumbers(startNum, endNum) {
+  if (startNum === endNum) {
+    return [startNum];
+  } else {
+    const countArray = rangeOfNumbers(startNum, endNum - 1);
+    countArray.push(endNum);
+    return countArray;
+  }
+};
+```
+
